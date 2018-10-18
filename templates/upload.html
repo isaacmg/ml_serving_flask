@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+          rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1> ChexNet </h1>
+        <h3 class="text-muted">Upload a Chest X-Ray to find out conditions present in the photo.</h3>
+      </div>
+      <hr/>
+      <div>
+      
+      <form action="upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file"><br /><br />
+        <input type="submit" value="Upload">
+      </form>
+      <p>
+        <b> * Warning this site is for demonstration purposes ONLY! </b>
+      </p>
+      <p>Diagnoses are not guaranteed to be true, correct, precise, or up-to-date! 
+        <br></br>
+        This algorithm is not a substitute for a doctor or medical professional.</p>
+
+        Model from <a href="https://github.com/brucechou1983/CheXNet-Keras"> ChexNet implementation by brucechou1983 </a> 
+      </div>
+    </div>
+   
+  </body>
+</html>

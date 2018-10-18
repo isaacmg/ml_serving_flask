@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+   <body>
+	<p>
+	<b> Possible conditions present </b>
+	</p>
+	{% for res in result.split(',') %}
+	<p> {{ res.replace("[", "")}} </p>
+	{% endfor %}
+
+   </body>
+</html>
