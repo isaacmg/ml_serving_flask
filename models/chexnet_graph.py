@@ -4,24 +4,30 @@ import numpy as np
 import requests
 from model_agnostic.models.graph_pipe import GraphPipeRemote
 import torch
-import torchvision.transforms as move
+import torchvision.transforms as transform
 
 from graphpipe import remote
 class ChexNetDeploy(GraphPipeRemote):
-    def preprocessing(self, image_path:str):
+    def preprocessing(self, image_path:str, augmentation=True):
             """ 
+            preprocessing function 
+            :param bool augmentation: can either use cropping augmentation or not.
             """
-            image = Image.open(image_path)
-            normalize = move.Normalize([0.485, 0.456, 0.406],
+            image = Image.open(image_path).convert('RGB')
+            normalize = transform.Normalize([0.485, 0.456, 0.406],
                                         [0.229, 0.224, 0.225])
-            trans = move.Compose([
-                                            move.Resize(256),
-                                            move.TenCrop(224),
-                                            move.Lambda
-                                            (lambda crops: torch.stack([move.ToTensor()(crop) for crop in crops])),
-                                            move.Lambda
-                                            (lambda crops: torch.stack([normalize(crop) for crop in crops]))
-                                        ])
+            if augmentation:
+                preprocessing_list = [ transform.Resize(256), transform.TenCrop(224),
+                                                    transform.Lambda
+                                                    (lambda crops: torch.stack([transform.ToTensor()(crop) for crop in crops])),
+                                                    transform.Lambda
+                                                    (lambda crops: torch.stack([normalize(crop) for crop in crops]))
+                                      ]
+            else: 
+                preprocessing_list = [transform.Resize((224,224)), transform.ToTensor(), normalize]
+
+            trans = transform.Compose(preprocessing_list)
+                                    
             image = trans(image)
             
             n_crops, c, h, w = image.size()
@@ -30,8 +36,6 @@ class ChexNetDeploy(GraphPipeRemote):
 
     def process_result(self, n):
         if len(self.result>1):
-            print("data below")
-            #print(self.result)
             result = self.result.mean(axis=0)
             
         else: 
@@ -45,6 +49,6 @@ class ChexNetDeploy(GraphPipeRemote):
             result_dict[class_name[i]] = result[i]
         return result_dict
 
-
+#
 
 
