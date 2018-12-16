@@ -9,19 +9,27 @@ app = Flask(__name__)
 api = Api(app)
 
 class AllenWraper(Resource):
-   def __init__(self, url: str):
+    def __init__(self, url: str):
         self.predictor = Predictor.from_path(url)
         self.token = os.environ["token"]
+
         
-    def predict(user_string: str):
+    def predict(self, user_string: str):
         return self.predictor(user_string) 
+    
+    def process_result(self, result_text):
+        pass 
         
-    def post(self):
+    def get(self):
         data = json.load(request.data)
-        if data["token"] == token:
-            pass
+        if data["token"] == self.token:
+            result = self.predict(data["text"]) 
+            return result 
+
+
         
         
         
 
 api.add_resource(AllenWraper, '/get_model') 
+
