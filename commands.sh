@@ -1,0 +1,1 @@
+docker run -it --rm -e https_proxy=${https_proxy} -p 9000:9000 sleepsonthefloor/graphpipe-onnx:cpu --value-inputs=https://raw.githubusercontent.com/isaacmg/s2i_pytorch_chex/master/value_inputs2.json --model=https://storage.googleapis.com/slu_data/chex/chexnet-py.onnx --listen=0.0.0.0:9000

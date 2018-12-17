@@ -7,24 +7,27 @@ import json
 import os 
 app = Flask(__name__)
 api = Api(app)
+predictor = Predictor.from_path("https://s3-us-west-2.amazonaws.com/allennlp/models/srl-model-2018.05.25.tar.gz")
 
 class AllenWraper(Resource):
-    def __init__(self, url=""):
-        self.predictor = Predictor.from_path(url)
+    def __init__(self, environ="test"):
+        # TODO get environment from Docker 
+        if environ == "test":
+            os.environ["token"] = "testToken"
         self.token = os.environ["token"]
 
-        
     def predict(self, user_string: str):
-        return self.predictor(user_string) 
+        return predictor(user_string) 
     
-    def process_result(self, result_text):
+    def process_result(self, result_text: str):
         pass 
         
     def get(self):
-        data = json.load(request.data)
+        print(request)
+        data = json.loads(request.data)
         if data["token"] == self.token:
-            result = self.predict(data["text"]) 
-            return result 
+            result = predictor.predict(data["text"]) 
+            return json.dumps({"result":result})
 
 api.add_resource(AllenWraper, '/get_model') 
 
