@@ -25,6 +25,8 @@ class AllenWraper(Resource):
     def get(self):
         print(request)
         data = json.loads(request.data)
+        if data["text"]=="test":
+            return json.dumps({"result":"Test has passed"})
         if data["token"] == self.token:
             result = predictor.predict(data["text"]) 
             return json.dumps({"result":result})
