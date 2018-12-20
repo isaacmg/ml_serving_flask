@@ -1,4 +1,4 @@
-FROM allennlp/allennlp
+FROM allennlp/allennlp:v0.8.0
 RUN pip install flask &&\
     pip install flask_restful
 RUN git clone http://github.com/isaacmg/ml_serving_flask
