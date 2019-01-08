@@ -1,13 +1,13 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
-
+import sys
 import allennlp
 from allennlp.predictors.predictor import Predictor
 import json 
 import os 
 app = Flask(__name__)
 api = Api(app)
-predictor = Predictor.from_path("https://s3-us-west-2.amazonaws.com/allennlp/models/srl-model-2018.05.25.tar.gz")
+predictor = Predictor.from_path("model.tar.gz")
 
 class AllenWraper(Resource):
     def __init__(self, environ="test"):
@@ -23,8 +23,9 @@ class AllenWraper(Resource):
         pass 
         
     def get(self):
-        print(request)
-        data = json.loads(request.data)
+        print("data below",  file=sys.stderr)
+        print(request.form,  file=sys.stderr)
+        data = request.args
         if data["text"]=="test":
             return json.dumps({"result":"Test has passed"})
         if data["token"] == self.token:

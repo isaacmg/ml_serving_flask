@@ -1,3 +1,4 @@
 *.jpg
 *.png
 models/__pycache__
+*.gz
