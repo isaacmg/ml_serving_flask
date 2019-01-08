@@ -7,7 +7,7 @@ import json
 import os 
 app = Flask(__name__)
 api = Api(app)
-predictor = Predictor.from_path("model.tar.gz")
+predictor = Predictor.from_path("https://s3-us-west-2.amazonaws.com/allennlp/models/srl-model-2018.05.25.tar.gz")
 
 class AllenWraper(Resource):
     def __init__(self, environ="test"):
