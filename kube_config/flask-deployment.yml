@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: flask
-        image: torchmoji/base:01
+        image: aistream/torchmoji:01
         env:
         - name: FLASK_ENV
           value: "development"
