@@ -5,10 +5,10 @@ metadata:
   annotations:
 spec:
   rules:
-  - host: hello.world
+  - host: api.aistream
     http:
       paths:
-      - path: /api/v1/emojiSentiment
+      - path: /
         backend:
           serviceName: flask
           servicePort: 5000
