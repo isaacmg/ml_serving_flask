@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gcp-ingress
+  annotations:
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: flask
+          servicePort: 5000
+
